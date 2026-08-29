@@ -1,0 +1,33 @@
+$schema: https://learning-contents.org/schemas/parameterized-code-tracing/0.1.0
+license: MIT
+locale: en-US
+id: parameterized_code_tracing_id
+source: main.go
+title: Deposit/Withdraw from Bank Account
+description: This program simulates a bank account in Go.
+authors:
+  - first: First
+    last: Last
+    email: author@example.com
+    affiliation: University
+pedagogy:
+  activity: parameterized-code-tracing
+  difficulty: novice
+  prereq_topics: [basics]
+  topics: [basics, structs, methods]
+runtime:
+  language: go
+statement: |
+  Determine the exact **output** of the code tracing execution.
+  The program initializes a `BankAccount` with a starting balance and executes a sequence of `Deposit` and `Withdraw` method calls.
+elements:
+  - type: parameter
+    location:
+      context: 'account := NewBankAccount("Bob", 200)'
+      snippet: "200"
+    values: [100, 200, 300]
+  - type: parameter
+    location:
+      context: "account.Deposit(100)"
+      snippet: "100"
+    values: [100, 200, 300]

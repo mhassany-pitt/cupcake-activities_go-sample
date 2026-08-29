@@ -1,0 +1,93 @@
+$schema: https://learning-contents.org/schemas/parsons-puzzles/0.1.0
+license: MIT
+locale: en-US
+id: pp_bank_account
+source: main.go
+title: Bank Transaction Logic
+description: Arrange the methods to correctly handle account transactions in Go.
+authors:
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
+pedagogy:
+  activity: parsons-puzzles
+  difficulty: novice
+  prereq_topics: [structs, methods]
+  topics: [structs, methods, conditional logic]
+runtime:
+  language: go
+statement: |
+  Rearrange the blocks to correctly implement the deposit and withdrawal methods for the `BankAccount` struct. Make sure to:
+  1. Handle inputs safely
+  2. Validate account balances
+executions:
+  - title: Standard Transaction
+    stdout: |-
+      Deposited 100
+      Withdrew 50
+      Balance: 250
+    console: |-
+      Deposited 100
+      Withdrew 50
+      Balance: 250
+elements:
+  - type: block
+    location:
+      snippet: |2-
+        func (a *BankAccount) Deposit(amount int) int {
+        	if amount > 0 {
+        		a.balance += amount
+        		fmt.Printf("Deposited %d\n", amount)
+        	}
+        	return a.balance
+        }
+    choices:
+      - snippet: |-
+          func (a *BankAccount) Deposit(amount int) int {
+          	if amount > 0 {
+          		a.balance += amount
+          		fmt.Printf("Deposited %d\n", amount)
+          	}
+          	return a.balance
+          }
+        role: solution
+        explanations:
+          - body: |
+              Correctly adds the `amount` to `a.balance` if it is positive (`amount > 0`).
+  - type: block
+    location:
+      snippet: |2-
+        func (a *BankAccount) Withdraw(amount int) int {
+        	if 0 < amount && amount <= a.balance {
+        		a.balance -= amount
+        		fmt.Printf("Withdrew %d\n", amount)
+        	} else {
+        		fmt.Println("Insufficient funds")
+        	}
+        	return a.balance
+        }
+    choices:
+      - snippet: |-
+          func (a *BankAccount) Withdraw(amount int) int {
+          	if 0 < amount && amount <= a.balance {
+          		a.balance -= amount
+          		fmt.Printf("Withdrew %d\n", amount)
+          	} else {
+          		fmt.Println("Insufficient funds")
+          	}
+          	return a.balance
+          }
+        role: solution
+        explanations:
+          - body: |
+              Correctly subtracts the `amount` if funds are sufficient (`amount <= a.balance`).
+      - snippet: |-
+          func (a *BankAccount) Withdraw(amount int) int {
+          	a.balance -= amount
+          	return a.balance
+          }
+        role: distractor
+        explanations:
+          - body: |
+              This option is incorrect because it lacks the necessary funds check, which could lead to a **negative balance**! Always validate that `amount <= a.balance`.

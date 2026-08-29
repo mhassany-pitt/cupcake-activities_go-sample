@@ -1,0 +1,71 @@
+$schema: https://learning-contents.org/schemas/code-completion/0.1.0
+source: main.go
+license: MIT
+locale: en-US
+id: cc_bank_account
+title: Complete the BankAccount Logic
+description: Fill in the critical logic for account balance updates and validation in Go.
+authors:
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
+pedagogy:
+  activity: code-completion
+  difficulty: novice
+  prereq_topics: []
+  topics:
+    - structs
+    - arithmetic
+runtime:
+  language: go
+statement: |
+  Complete the `BankAccount` struct implementation by adding the missing updates and validation checks. Focus on:
+  - Updating `a.balance` during a deposit transaction
+  - Ensuring withdrawal amounts do not exceed the current balance
+executions:
+  - title: Bob's Account
+    stdin: []
+    stdout: |-
+      Deposited 100
+      Withdrew 50
+      Balance: 250
+    console: |-
+      Deposited 100
+      Withdrew 50
+      Balance: 250
+    stderr: ""
+    status: pass
+elements:
+  - type: blank
+    location:
+      context: "a.balance += amount"
+      snippet: "+="
+      nth: 1
+    choices:
+      - snippet: "+="
+        role: solution
+        explanations:
+          - body: |
+              Use the `+=` operator to **increase** the current balance by the deposit amount.
+      - snippet: "-="
+        role: distractor
+        explanations:
+          - body: |
+              This would use the `-=` operator, which **decreases** the balance instead of adding to it.
+  - type: blank
+    location:
+      context: "if 0 < amount && amount <= a.balance {"
+      snippet: "<="
+      nth: 1
+    choices:
+      - snippet: "<="
+        role: solution
+        explanations:
+          - body: |
+              You must check if the withdrawal amount is less than or equal (`<=`) to the current balance, ensuring the user has **sufficient funds**.
+      - snippet: ">"
+        role: distractor
+        explanations:
+          - body: |
+              Using `>` would allow withdrawals only when the account does NOT have enough funds, causing overdrafts.

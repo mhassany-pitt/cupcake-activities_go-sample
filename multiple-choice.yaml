@@ -1,0 +1,75 @@
+$schema: https://learning-contents.org/schemas/multiple-choice-question/0.1.0
+license: MIT
+locale: en-US
+id: mcq_bank_account_deposit
+title: Go Struct Deposit Method
+description: Choose the correct implementation of the deposit method in Go.
+authors:
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
+pedagogy:
+  activity: multiple-choice-question
+  difficulty: intermediate
+  prereq_topics:
+    - structs
+  topics:
+    - structs
+    - methods
+include_choices: 3
+question: |
+  Given the following Go struct definition for `BankAccount`:
+  
+  ```go
+  type BankAccount struct {
+      owner   string
+      balance int
+  }
+  ```
+  
+  Which of the following represents the correct implementation for a `Deposit` method in Go that mutates the account balance and returns the new balance?
+choices:
+  - body: |
+      ```go
+      func (a *BankAccount) Deposit(amount int) int {
+          if amount > 0 {
+              a.balance += amount
+          }
+          return a.balance
+      }
+      ```
+    role: solution
+    include: always
+    order: 1
+    explanations:
+      - body: |
+          This is the correct implementation. In Go, modifying fields of an instance requires a pointer receiver (`(a *BankAccount)`). It updates `a.balance` using `+=` and returns the final balance.
+  - body: |
+      ```go
+      func (a BankAccount) Deposit(amount int) int {
+          if amount > 0 {
+              a.balance += amount
+          }
+          return a.balance
+      }
+      ```
+    role: distractor
+    explanations:
+      - body: |
+          Incorrect. In Go, using a value receiver (`(a BankAccount)`) receives a copy of the struct, so changes to `a.balance` are discarded when the method returns.
+  - body: |
+      ```go
+      func Deposit(a BankAccount, amount int) int {
+          var balance = a.balance + amount
+          return balance
+      }
+      ```
+    role: distractor
+    explanations:
+      - body: |
+          Incorrect. This is a standalone function with a value parameter rather than a method with a pointer receiver.
+  - body: None
+    role: distractor
+    include: always
+    order: 2
