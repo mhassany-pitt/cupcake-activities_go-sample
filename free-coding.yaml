@@ -1,29 +1,27 @@
----
-"$schema": https://learning-contents.org/schemas/free-coding/0.1.0
+$schema: https://learning-contents.org/schemas/free-coding/0.1.0
 source: main.go
 license: MIT
 locale: en-US
 id: free_coding_bank_account
 title: Bank Account Management in Go
-description: Instantiate a BankAccount struct via NewBankAccount, execute Deposit
-  and Withdraw operations, and inspect the resulting balance.
+description: Instantiate a BankAccount struct via NewBankAccount, execute Deposit and Withdraw operations, and inspect the resulting balance.
 authors:
-- first: Jone
-  last: Doe
-  email: jone.doe@example.com
-  affiliation: University of John Doe
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
 pedagogy:
   activity: free-coding
   difficulty: novice
   prereq_topics:
-  - basic-syntax
-  - structs
+    - basic-syntax
+    - structs
   topics:
-  - structs
-  - pointers
-  - methods
-  - constructors
-  - state
+    - structs
+    - pointers
+    - methods
+    - constructors
+    - state
 runtime:
   language: go
 statement: |
@@ -33,79 +31,79 @@ statement: |
   3. Call `Withdraw` with an amount of `50`.
   4. Print the final balance using `fmt.Printf("Balance: %d\n", account.balance)`.
 executions:
-- title: Standard Transaction Sequence
-  stdin: []
-  stdout: |-
-    Deposited 100
-    Withdrew 50
-    Balance: 250
-  console: |-
-    Deposited 100
-    Withdrew 50
-    Balance: 250
-  status: pass
+  - title: Standard Transaction Sequence
+    stdin: []
+    stdout: |-
+      Deposited 100
+      Withdrew 50
+      Balance: 250
+    console: |-
+      Deposited 100
+      Withdrew 50
+      Balance: 250
+    status: pass
 elements:
-- type: locked
-  location:
-    snippet: |-
-      package main
+  - type: locked
+    location:
+      snippet: |-
+        package main
 
-      import "fmt"
+        import "fmt"
 
-      type BankAccount struct {
-          owner   string
-          balance int
-      }
+        type BankAccount struct {
+            owner   string
+            balance int
+        }
 
-      func NewBankAccount(owner string, balance int) *BankAccount {
-          return &BankAccount{
-              owner:   owner,
-              balance: balance,
-          }
-      }
+        func NewBankAccount(owner string, balance int) *BankAccount {
+            return &BankAccount{
+                owner:   owner,
+                balance: balance,
+            }
+        }
 
-      func (a *BankAccount) Deposit(amount int) int {
-          if amount > 0 {
-              a.balance += amount
-              fmt.Printf("Deposited %d\n", amount)
-          }
-          return a.balance
-      }
+        func (a *BankAccount) Deposit(amount int) int {
+            if amount > 0 {
+                a.balance += amount
+                fmt.Printf("Deposited %d\n", amount)
+            }
+            return a.balance
+        }
 
-      func (a *BankAccount) Withdraw(amount int) int {
-          if 0 < amount && amount <= a.balance {
-              a.balance -= amount
-              fmt.Printf("Withdrew %d\n", amount)
-          } else {
-              fmt.Println("Insufficient funds")
-          }
-          return a.balance
-      }
-- type: editable
-  location:
-    snippet: |2-
-          account := NewBankAccount("Bob", 200)
-          account.Deposit(100)
-          account.Withdraw(50)
-          fmt.Printf("Balance: %d\n", account.balance)
-  placeholder: |-
-    // 1. Create a BankAccount for "Bob" with 200 initial balance
+        func (a *BankAccount) Withdraw(amount int) int {
+            if 0 < amount && amount <= a.balance {
+                a.balance -= amount
+                fmt.Printf("Withdrew %d\n", amount)
+            } else {
+                fmt.Println("Insufficient funds")
+            }
+            return a.balance
+        }
+  - type: editable
+    location:
+      snippet: |2-
+            account := NewBankAccount("Bob", 200)
+            account.Deposit(100)
+            account.Withdraw(50)
+            fmt.Printf("Balance: %d\n", account.balance)
+    placeholder: |-
+      // 1. Create a BankAccount for "Bob" with 200 initial balance
 
-        // 2. Deposit 100
+          // 2. Deposit 100
 
-        // 3. Withdraw 50
+          // 3. Withdraw 50
 
-        // 4. Output formatted balance
+          // 4. Output formatted balance
 testcases:
-- title: Standard Account Workflow
-  visible: true
-  stdin: []
-  stdout: |-
-    Deposited 100
-    Withdrew 50
-    Balance: 250
-  console: |-
-    Deposited 100
-    Withdrew 50
-    Balance: 250
-  status: pass
+  - title: Standard Account Workflow
+    visible: true
+    stdin: []
+    stdout: |-
+      Deposited 100
+      Withdrew 50
+      Balance: 250
+    console: |-
+      Deposited 100
+      Withdrew 50
+      Balance: 250
+    status: pass

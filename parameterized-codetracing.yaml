@@ -35,16 +35,25 @@ statement: |
 elements:
   - type: parameter
     location:
-      context: 'account := NewBankAccount("Bob", 200)'
-      snippet: "200"
-    values: [100, 200, 300]
+      context: account := NewBankAccount("Bob", 200)
+      snippet: '200'
+    values:
+      - 100
+      - 200
+      - 300
   - type: parameter
     location:
-      context: "account.Deposit(100)"
-      snippet: "100"
-    values: [50, 100, 150]
+      context: account.Deposit(100)
+      snippet: '100'
+    values:
+      - 50
+      - 100
+      - 150
   - type: parameter
     location:
-      context: "account.Withdraw(50)"
-      snippet: "50"
-    values: [50, 200, 350]
+      context: account.Withdraw(50)
+      snippet: '50'
+    values:
+      - 50
+      - 200
+      - 350

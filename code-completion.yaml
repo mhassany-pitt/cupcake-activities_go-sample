@@ -42,104 +42,104 @@ executions:
       Deposited 100
       Withdrew 50
       Balance: 250
-    stderr: ""
+    stderr: ''
     status: pass
 elements:
   - type: blank
     location:
-      context: "type BankAccount struct {"
-      snippet: "struct"
+      context: type BankAccount struct {
+      snippet: struct
       nth: 1
     choices:
-      - snippet: "struct"
+      - snippet: struct
         role: solution
         explanations:
           - body: |
               Correct! In Go, the `struct` keyword is used to declare a user-defined record type containing named fields.
-      - snippet: "interface"
+      - snippet: interface
         role: distractor
         explanations:
           - body: |
               Incorrect. In Go, an `interface` declares a set of method signatures rather than concrete struct fields.
-      - snippet: "class"
+      - snippet: class
         role: distractor
         explanations:
           - body: |
               Incorrect. Go does not have a `class` keyword; object models are constructed using `struct` and receiver methods.
-      - snippet: "type"
+      - snippet: type
         role: distractor
         explanations:
           - body: |
               Incorrect. `type` begins the type declaration (`type BankAccount ...`), but `struct` defines the underlying composite structure.
   - type: blank
     location:
-      context: "a.balance += amount"
-      snippet: "+="
+      context: a.balance += amount
+      snippet: +=
       nth: 1
     choices:
-      - snippet: "+="
+      - snippet: +=
         role: solution
         explanations:
           - body: |
               Correct! The compound addition operator (`+=`) increases `a.balance` by `amount`.
-      - snippet: "-="
+      - snippet: -=
         role: distractor
         explanations:
           - body: |
               Incorrect. The compound subtraction operator (`-=`) would deduct money from the account during a deposit instead of crediting it.
-      - snippet: "*="
+      - snippet: '*='
         role: distractor
         explanations:
           - body: |
               Incorrect. The compound multiplication operator (`*=`) would multiply the existing balance by the deposit amount, yielding an incorrect total.
-      - snippet: "="
+      - snippet: '='
         role: distractor
         explanations:
           - body: |
               Incorrect. Using `=` overwrites the balance with `amount` rather than accumulating funds.
   - type: blank
     location:
-      context: "if 0 < amount && amount <= a.balance {"
-      snippet: "<="
+      context: if 0 < amount && amount <= a.balance {
+      snippet: <=
       nth: 1
     choices:
-      - snippet: "<="
+      - snippet: <=
         role: solution
         explanations:
           - body: |
               Correct! The less-than-or-equal operator (`<=`) ensures the user has sufficient funds, allowing withdrawals up to and including the exact total balance without overdrafting.
-      - snippet: "<"
+      - snippet: <
         role: distractor
         explanations:
           - body: |
               Incorrect. The strictly-less-than operator (`<`) would prevent account holders from withdrawing their exact entire balance (withdrawing down to zero).
-      - snippet: ">="
+      - snippet: '>='
         role: distractor
         explanations:
           - body: |
               Incorrect. Using `>=` would invert the business logic, permitting withdrawals only when the amount is greater than or equal to the balance, guaranteeing an overdraft.
-      - snippet: ">"
+      - snippet: '>'
         role: distractor
         explanations:
           - body: |
               Incorrect. Using `>` would only permit transactions that exceed the current balance, causing an immediate overdraft into negative funds.
   - type: blank
     location:
-      context: "account.Deposit(100)"
-      snippet: "Deposit"
+      context: account.Deposit(100)
+      snippet: Deposit
       nth: 1
     choices:
-      - snippet: "Deposit"
+      - snippet: Deposit
         role: solution
         explanations:
           - body: |
               Correct! Invokes the `Deposit` method on `account` with an argument of `100` to credit the account.
-      - snippet: "Withdraw"
+      - snippet: Withdraw
         role: distractor
         explanations:
           - body: |
               Incorrect. Invoking `Withdraw(100)` would debit the account instead of performing the required deposit transaction.
-      - snippet: "balance"
+      - snippet: balance
         role: distractor
         explanations:
           - body: |
