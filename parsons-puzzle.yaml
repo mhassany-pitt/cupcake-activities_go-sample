@@ -99,28 +99,6 @@ elements:
         explanations:
           - body: |
               Correct! Uses a pointer receiver `(a *BankAccount)` to mutate `a.balance` when `amount > 0` and returns the updated balance.
-      - snippet: |-
-          func (a BankAccount) Deposit(amount int) int {
-              if amount > 0 {
-                  a.balance += amount
-                  fmt.Printf("Deposited %d\n", amount)
-              }
-              return a.balance
-          }
-        role: distractor
-        explanations:
-          - body: |
-              Incorrect. Using a value receiver `(a BankAccount)` mutates a temporary copy; `a.balance` changes are lost when the method finishes.
-      - snippet: |-
-          func (a *BankAccount) Deposit(amount int) int {
-              a.balance += amount
-              fmt.Printf("Deposited %d\n", amount)
-              return a.balance
-          }
-        role: distractor
-        explanations:
-          - body: |
-              Incorrect. Omits the `if amount > 0` guard check, allowing non-positive amounts to alter account funds.
   - type: block
     group: bank-functions
     location:
@@ -159,17 +137,3 @@ elements:
         explanations:
           - body: |
               Incorrect. Unconditionally debits `amount` without verifying `amount <= a.balance`, leading to negative balances.
-      - snippet: |-
-          func (a *BankAccount) Withdraw(amount int) int {
-              if 0 < amount && amount > a.balance {
-                  a.balance -= amount
-                  fmt.Printf("Withdrew %d\n", amount)
-              } else {
-                  fmt.Println("Insufficient funds")
-              }
-              return a.balance
-          }
-        role: distractor
-        explanations:
-          - body: |
-              Incorrect. The comparison `amount > a.balance` inverts the logic: it only allows withdrawals when the amount exceeds the balance, guaranteeing an overdraft on every successful withdrawal!
