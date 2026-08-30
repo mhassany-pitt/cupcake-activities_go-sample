@@ -88,12 +88,9 @@ elements:
             fmt.Printf("Balance: %d\n", account.balance)
     placeholder: |-
       // 1. Create a BankAccount for "Bob" with 200 initial balance
-
-          // 2. Deposit 100
-
-          // 3. Withdraw 50
-
-          // 4. Output formatted balance
+      // 2. Deposit 100
+      // 3. Withdraw 50
+      // 4. Output formatted balance
 testcases:
   - title: Standard Account Workflow
     visible: true
