@@ -47,18 +47,18 @@ elements:
     location:
       snippet: |-
         func NewBankAccount(owner string, balance int) *BankAccount {
-        	return &BankAccount{
-        		owner:   owner,
-        		balance: balance,
-        	}
+            return &BankAccount{
+                owner:   owner,
+                balance: balance,
+            }
         }
     choices:
       - snippet: |-
           func NewBankAccount(owner string, balance int) *BankAccount {
-          	return &BankAccount{
-          		owner:   owner,
-          		balance: balance,
-          	}
+              return &BankAccount{
+                  owner:   owner,
+                  balance: balance,
+              }
           }
         role: solution
         explanations:
@@ -66,10 +66,10 @@ elements:
               Correct! Returns a pointer to a composite literal `&BankAccount{...}` with initialized `owner` and `balance`.
       - snippet: |-
           func NewBankAccount(owner string, balance int) BankAccount {
-          	return BankAccount{
-          		owner:   owner,
-          		balance: balance,
-          	}
+              return BankAccount{
+                  owner:   owner,
+                  balance: balance,
+              }
           }
         role: distractor
         explanations:
@@ -80,20 +80,20 @@ elements:
     location:
       snippet: |-
         func (a *BankAccount) Deposit(amount int) int {
-        	if amount > 0 {
-        		a.balance += amount
-        		fmt.Printf("Deposited %d\n", amount)
-        	}
-        	return a.balance
+            if amount > 0 {
+                a.balance += amount
+                fmt.Printf("Deposited %d\n", amount)
+            }
+            return a.balance
         }
     choices:
       - snippet: |-
           func (a *BankAccount) Deposit(amount int) int {
-          	if amount > 0 {
-          		a.balance += amount
-          		fmt.Printf("Deposited %d\n", amount)
-          	}
-          	return a.balance
+              if amount > 0 {
+                  a.balance += amount
+                  fmt.Printf("Deposited %d\n", amount)
+              }
+              return a.balance
           }
         role: solution
         explanations:
@@ -101,11 +101,11 @@ elements:
               Correct! Uses a pointer receiver `(a *BankAccount)` to mutate `a.balance` when `amount > 0` and returns the updated balance.
       - snippet: |-
           func (a BankAccount) Deposit(amount int) int {
-          	if amount > 0 {
-          		a.balance += amount
-          		fmt.Printf("Deposited %d\n", amount)
-          	}
-          	return a.balance
+              if amount > 0 {
+                  a.balance += amount
+                  fmt.Printf("Deposited %d\n", amount)
+              }
+              return a.balance
           }
         role: distractor
         explanations:
@@ -113,9 +113,9 @@ elements:
               Incorrect. Using a value receiver `(a BankAccount)` mutates a temporary copy; `a.balance` changes are lost when the method finishes.
       - snippet: |-
           func (a *BankAccount) Deposit(amount int) int {
-          	a.balance += amount
-          	fmt.Printf("Deposited %d\n", amount)
-          	return a.balance
+              a.balance += amount
+              fmt.Printf("Deposited %d\n", amount)
+              return a.balance
           }
         role: distractor
         explanations:
@@ -126,24 +126,24 @@ elements:
     location:
       snippet: |-
         func (a *BankAccount) Withdraw(amount int) int {
-        	if 0 < amount && amount <= a.balance {
-        		a.balance -= amount
-        		fmt.Printf("Withdrew %d\n", amount)
-        	} else {
-        		fmt.Println("Insufficient funds")
-        	}
-        	return a.balance
+            if 0 < amount && amount <= a.balance {
+                a.balance -= amount
+                fmt.Printf("Withdrew %d\n", amount)
+            } else {
+                fmt.Println("Insufficient funds")
+            }
+            return a.balance
         }
     choices:
       - snippet: |-
           func (a *BankAccount) Withdraw(amount int) int {
-          	if 0 < amount && amount <= a.balance {
-          		a.balance -= amount
-          		fmt.Printf("Withdrew %d\n", amount)
-          	} else {
-          		fmt.Println("Insufficient funds")
-          	}
-          	return a.balance
+              if 0 < amount && amount <= a.balance {
+                  a.balance -= amount
+                  fmt.Printf("Withdrew %d\n", amount)
+              } else {
+                  fmt.Println("Insufficient funds")
+              }
+              return a.balance
           }
         role: solution
         explanations:
@@ -151,9 +151,9 @@ elements:
               Correct! Validates `0 < amount && amount <= a.balance`, debits the balance on success, and outputs an error message on insufficient funds.
       - snippet: |-
           func (a *BankAccount) Withdraw(amount int) int {
-          	a.balance -= amount
-          	fmt.Printf("Withdrew %d\n", amount)
-          	return a.balance
+              a.balance -= amount
+              fmt.Printf("Withdrew %d\n", amount)
+              return a.balance
           }
         role: distractor
         explanations:
@@ -161,13 +161,13 @@ elements:
               Incorrect. Unconditionally debits `amount` without verifying `amount <= a.balance`, leading to negative balances.
       - snippet: |-
           func (a *BankAccount) Withdraw(amount int) int {
-          	if 0 < amount && amount > a.balance {
-          		a.balance -= amount
-          		fmt.Printf("Withdrew %d\n", amount)
-          	} else {
-          		fmt.Println("Insufficient funds")
-          	}
-          	return a.balance
+              if 0 < amount && amount > a.balance {
+                  a.balance -= amount
+                  fmt.Printf("Withdrew %d\n", amount)
+              } else {
+                  fmt.Println("Insufficient funds")
+              }
+              return a.balance
           }
         role: distractor
         explanations:
