@@ -3,8 +3,8 @@ license: MIT
 locale: en-US
 id: pp_bank_account
 source: main.go
-title: Bank Transaction Logic
-description: Arrange the methods to correctly handle account transactions in Go.
+title: Bank Account Methods and Constructor in Go
+description: Rearrange the Go constructor function and pointer receiver methods to manage BankAccount struct state and enforce transaction safety.
 authors:
   - first: Jone
     last: Doe
@@ -13,14 +13,23 @@ authors:
 pedagogy:
   activity: parsons-puzzles
   difficulty: novice
-  prereq_topics: [structs, methods]
-  topics: [structs, methods, conditional logic]
+  prereq_topics:
+    - basic-syntax
+    - structs
+  topics:
+    - structs
+    - pointers
+    - methods
+    - constructors
+    - conditional-logic
 runtime:
   language: go
 statement: |
-  Rearrange the blocks to correctly implement the deposit and withdrawal methods for the `BankAccount` struct. Make sure to:
-  1. Handle inputs safely
-  2. Validate account balances
+  Rearrange the blocks to correctly implement the factory constructor and methods for the `BankAccount` struct in Go.
+  Make sure to:
+  1. Initialize and return a pointer to a `BankAccount` struct (`*BankAccount`).
+  2. Implement the `Deposit` method with a pointer receiver and positive input validation.
+  3. Implement the `Withdraw` method with strict overdraft protection and insufficient funds notification.
 executions:
   - title: Standard Transaction
     stdout: |-
@@ -31,10 +40,45 @@ executions:
       Deposited 100
       Withdrew 50
       Balance: 250
+    status: pass
 elements:
   - type: block
+    group: bank-functions
     location:
-      snippet: |2-
+      snippet: |-
+        func NewBankAccount(owner string, balance int) *BankAccount {
+        	return &BankAccount{
+        		owner:   owner,
+        		balance: balance,
+        	}
+        }
+    choices:
+      - snippet: |-
+          func NewBankAccount(owner string, balance int) *BankAccount {
+          	return &BankAccount{
+          		owner:   owner,
+          		balance: balance,
+          	}
+          }
+        role: solution
+        explanations:
+          - body: |
+              Correct! Returns a pointer to a composite literal `&BankAccount{...}` with initialized `owner` and `balance`.
+      - snippet: |-
+          func NewBankAccount(owner string, balance int) BankAccount {
+          	return BankAccount{
+          		owner:   owner,
+          		balance: balance,
+          	}
+          }
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Returning `BankAccount` by value rather than pointer `*BankAccount` prevents sharing mutable state with pointer receiver methods.
+  - type: block
+    group: bank-functions
+    location:
+      snippet: |-
         func (a *BankAccount) Deposit(amount int) int {
         	if amount > 0 {
         		a.balance += amount
@@ -54,10 +98,33 @@ elements:
         role: solution
         explanations:
           - body: |
-              Correctly adds the `amount` to `a.balance` if it is positive (`amount > 0`).
+              Correct! Uses a pointer receiver `(a *BankAccount)` to mutate `a.balance` when `amount > 0` and returns the updated balance.
+      - snippet: |-
+          func (a BankAccount) Deposit(amount int) int {
+          	if amount > 0 {
+          		a.balance += amount
+          		fmt.Printf("Deposited %d\n", amount)
+          	}
+          	return a.balance
+          }
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Using a value receiver `(a BankAccount)` mutates a temporary copy; `a.balance` changes are lost when the method finishes.
+      - snippet: |-
+          func (a *BankAccount) Deposit(amount int) int {
+          	a.balance += amount
+          	fmt.Printf("Deposited %d\n", amount)
+          	return a.balance
+          }
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Omits the `if amount > 0` guard check, allowing non-positive amounts to alter account funds.
   - type: block
+    group: bank-functions
     location:
-      snippet: |2-
+      snippet: |-
         func (a *BankAccount) Withdraw(amount int) int {
         	if 0 < amount && amount <= a.balance {
         		a.balance -= amount
@@ -81,13 +148,28 @@ elements:
         role: solution
         explanations:
           - body: |
-              Correctly subtracts the `amount` if funds are sufficient (`amount <= a.balance`).
+              Correct! Validates `0 < amount && amount <= a.balance`, debits the balance on success, and outputs an error message on insufficient funds.
       - snippet: |-
           func (a *BankAccount) Withdraw(amount int) int {
           	a.balance -= amount
+          	fmt.Printf("Withdrew %d\n", amount)
           	return a.balance
           }
         role: distractor
         explanations:
           - body: |
-              This option is incorrect because it lacks the necessary funds check, which could lead to a **negative balance**! Always validate that `amount <= a.balance`.
+              Incorrect. Unconditionally debits `amount` without verifying `amount <= a.balance`, leading to negative balances.
+      - snippet: |-
+          func (a *BankAccount) Withdraw(amount int) int {
+          	if 0 < amount && amount > a.balance {
+          		a.balance -= amount
+          		fmt.Printf("Withdrew %d\n", amount)
+          	} else {
+          		fmt.Println("Insufficient funds")
+          	}
+          	return a.balance
+          }
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. The comparison `amount > a.balance` inverts the logic: it only allows withdrawals when the amount exceeds the balance, guaranteeing an overdraft on every successful withdrawal!

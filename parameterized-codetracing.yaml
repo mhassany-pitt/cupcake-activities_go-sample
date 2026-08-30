@@ -1,25 +1,37 @@
 $schema: https://learning-contents.org/schemas/parameterized-code-tracing/0.1.0
 license: MIT
 locale: en-US
-id: parameterized_code_tracing_id
+id: parameterized_code_tracing_bank_account
 source: main.go
-title: Deposit/Withdraw from Bank Account
-description: This program simulates a bank account in Go.
+title: Trace Go Bank Account State Transitions
+description: Trace the sequence of balance updates and console outputs as starting balance, deposit amounts, and withdrawal amounts vary.
 authors:
-  - first: First
-    last: Last
-    email: author@example.com
-    affiliation: University
+  - first: Jone
+    last: Doe
+    email: jone.doe@example.com
+    affiliation: University of John Doe
 pedagogy:
   activity: parameterized-code-tracing
   difficulty: novice
-  prereq_topics: [basics]
-  topics: [basics, structs, methods]
+  prereq_topics:
+    - basic-syntax
+    - variables
+  topics:
+    - structs
+    - pointers
+    - methods
+    - constructors
+    - conditional-logic
+    - state-tracing
+    - arithmetic
 runtime:
   language: go
 statement: |
-  Determine the exact **output** of the code tracing execution.
-  The program initializes a `BankAccount` with a starting balance and executes a sequence of `Deposit` and `Withdraw` method calls.
+  Trace the execution of the Go program below and determine the exact console output produced.
+  Pay close attention to:
+  * How the initial balance is modified after `Deposit(...)`.
+  * Whether the withdrawal amount exceeds the balance after deposit, triggering the `"Insufficient funds"` branch.
+  * The final balance value output by `fmt.Printf("Balance: %d\n", account.balance)`.
 elements:
   - type: parameter
     location:
@@ -30,4 +42,9 @@ elements:
     location:
       context: "account.Deposit(100)"
       snippet: "100"
-    values: [100, 200, 300]
+    values: [50, 100, 150]
+  - type: parameter
+    location:
+      context: "account.Withdraw(50)"
+      snippet: "50"
+    values: [50, 200, 350]

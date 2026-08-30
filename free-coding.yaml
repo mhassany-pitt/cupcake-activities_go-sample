@@ -3,8 +3,8 @@ source: main.go
 license: MIT
 locale: en-US
 id: free_coding_bank_account
-title: Bank Account Management
-description: Implement and test bank account methods in Go.
+title: Bank Account Management in Go
+description: Instantiate a BankAccount struct via NewBankAccount, execute Deposit and Withdraw operations, and inspect the resulting balance.
 authors:
   - first: Jone
     last: Doe
@@ -13,15 +13,25 @@ authors:
 pedagogy:
   activity: free-coding
   difficulty: novice
-  prereq_topics: [structs]
-  topics: [structs, methods, state]
+  prereq_topics:
+    - basic-syntax
+    - structs
+  topics:
+    - structs
+    - pointers
+    - methods
+    - constructors
+    - state
 runtime:
   language: go
 statement: |
-  Implement a `transfer` sequence or method in `main` to move money from one `BankAccount` to another.
-  Ensure that money is withdrawn from the current account only if funds are sufficient, and deposited into the target account.
+  In the `main` function, write the Go code to interact with the `BankAccount` struct:
+  1. Instantiate a new `BankAccount` pointer named `account` for owner `"Bob"` with an initial balance of `200` using `NewBankAccount`.
+  2. Call `Deposit` with an amount of `100`.
+  3. Call `Withdraw` with an amount of `50`.
+  4. Print the final balance using `fmt.Printf("Balance: %d\n", account.balance)`.
 executions:
-  - title: Transfer Alice to Bob
+  - title: Standard Transaction Sequence
     stdin: []
     stdout: |-
       Deposited 100
@@ -72,15 +82,20 @@ elements:
   - type: editable
     location:
       snippet: |-
-        account := NewBankAccount("Bob", 200)
+        	account := NewBankAccount("Bob", 200)
         	account.Deposit(100)
         	account.Withdraw(50)
         	fmt.Printf("Balance: %d\n", account.balance)
     placeholder: |-
-      // Implement transfer sequence here
-      	// Then test it with acc1 and acc2
+      // 1. Create a BankAccount for "Bob" with 200 initial balance
+
+      	// 2. Deposit 100
+
+      	// 3. Withdraw 50
+
+      	// 4. Output formatted balance
 testcases:
-  - title: Simple Transfer
+  - title: Standard Account Workflow
     visible: true
     stdin: []
     stdout: |-
@@ -91,3 +106,4 @@ testcases:
       Deposited 100
       Withdrew 50
       Balance: 250
+    status: pass

@@ -3,8 +3,8 @@ source: main.go
 license: MIT
 locale: en-US
 id: we_bank_account
-title: Bank Account Management
-description: Learn how to use structs and methods to manage a bank account in Go.
+title: Bank Account Management in Go
+description: Learn how to use Go structs, pointer receivers, factory constructors, and formatted I/O to manage state.
 authors:
   - first: Jone
     last: Doe
@@ -13,17 +13,25 @@ authors:
 pedagogy:
   activity: worked-example
   difficulty: novice
-  prereq_topics: []
+  prereq_topics:
+    - basic-syntax
+    - variables
   topics:
     - structs
+    - pointers
+    - methods
+    - constructors
     - state
+    - conditional-logic
 runtime:
   language: go
 statement: |
-  This worked example demonstrates how `BankAccount` state is managed in Go using structs and receiver methods. We'll examine:
-  1. Struct constructor (`NewBankAccount`)
-  2. Deposit method (`Deposit`)
-  3. Withdrawal method (`Withdraw`)
+  This worked example demonstrates how `BankAccount` state and operations are modeled in Go using structs, pointer receiver methods, and factory constructors. We'll examine:
+  1. The `BankAccount` struct declaration and field definitions (`owner` and `balance`).
+  2. The `NewBankAccount` constructor function returning a pointer to a struct composite literal.
+  3. The `Deposit` method using a pointer receiver `(a *BankAccount)` to mutate instance state.
+  4. The `Withdraw` method with compound guard logic protecting against overdrafts.
+  5. The `main` driver function demonstrating instantiation with `:=`, method calls, and formatted printing with `fmt.Printf`.
 executions:
   - title: Bob's Account
     stdin: []
@@ -39,22 +47,82 @@ executions:
 elements:
   - type: explanation
     location:
-      snippet: "func NewBankAccount(owner string, balance int) *BankAccount {"
+      snippet: |-
+        type BankAccount struct {
+        	owner   string
+        	balance int
+        }
     explanations:
       - body: |
-          In Go, constructors are standard factory functions returning pointer to struct:
-          ```go
-          func NewBankAccount(owner string, balance int) *BankAccount {
-              return &BankAccount{
-                  owner:   owner,
-                  balance: balance,
-              }
-          }
-          ```
-          This instantiates and returns a pointer to a `BankAccount`.
+          ### 1. Struct Declaration
+          * `type BankAccount struct`: In Go, user-defined record types are declared as `struct` types grouping named fields.
+          * `owner string` and `balance int`: Unexported fields (starting with a lowercase letter) scoped to the package.
   - type: explanation
     location:
-      snippet: "if 0 < amount && amount <= a.balance {"
+      snippet: |-
+        func NewBankAccount(owner string, balance int) *BankAccount {
+        	return &BankAccount{
+        		owner:   owner,
+        		balance: balance,
+        	}
+        }
     explanations:
       - body: |
-          This condition validates that the withdrawal transaction is correct: it checks if the `amount` is greater than `0` and is less than or equal to the current `a.balance`.
+          ### 2. Constructor Factory Function
+          * In Go, constructors are conventional factory functions prefixed with `New` that return a pointer to the newly initialized struct (`*BankAccount`).
+          * The `&BankAccount{ owner: owner, balance: balance }` composite literal creates the struct on the heap (via Go's escape analysis) and returns its memory address.
+  - type: explanation
+    location:
+      snippet: |-
+        func (a *BankAccount) Deposit(amount int) int {
+        	if amount > 0 {
+        		a.balance += amount
+        		fmt.Printf("Deposited %d\n", amount)
+        	}
+        	return a.balance
+        }
+    explanations:
+      - body: |
+          ### 3. The `Deposit` Method and Pointer Receiver
+          * **Pointer Receiver `(a *BankAccount)`**: In Go, methods declared with a pointer receiver mutate the original struct instance in memory. If a value receiver `(a BankAccount)` were used instead, changes would apply only to a temporary copy.
+          * **Input Validation**: `if amount > 0` acts as a guard condition ensuring only positive amounts are deposited.
+          * **State Mutation**: `a.balance += amount` adds the deposit amount to the balance.
+          * **Formatted Output**: `fmt.Printf("Deposited %d\n", amount)` prints formatted text with a newline.
+          * **Return Value**: `return a.balance` returns the updated integer balance.
+  - type: explanation
+    location:
+      snippet: |-
+        func (a *BankAccount) Withdraw(amount int) int {
+        	if 0 < amount && amount <= a.balance {
+        		a.balance -= amount
+        		fmt.Printf("Withdrew %d\n", amount)
+        	} else {
+        		fmt.Println("Insufficient funds")
+        	}
+        	return a.balance
+        }
+    explanations:
+      - body: |
+          ### 4. The `Withdraw` Method and Overdraft Protection
+          * **Compound Guard Condition**: `if 0 < amount && amount <= a.balance` checks two conditions with `&&`:
+            1. `0 < amount`: The withdrawal amount must be strictly positive.
+            2. `amount <= a.balance`: The requested amount must not exceed available funds (allowing full withdrawals down to 0).
+          * **Successful Debit**: When valid, `a.balance -= amount` debits the balance and logs confirmation.
+          * **Fallback Branch**: The `else` block catches overdraft attempts or invalid amounts by printing `"Insufficient funds"` without modifying `a.balance`.
+          * **Return Value**: Returns the current balance in all cases.
+  - type: explanation
+    location:
+      snippet: |-
+        func main() {
+        	account := NewBankAccount("Bob", 200)
+        	account.Deposit(100)
+        	account.Withdraw(50)
+        	fmt.Printf("Balance: %d\n", account.balance)
+        }
+    explanations:
+      - body: |
+          ### 5. Execution Flow in `main`
+          * `account := NewBankAccount("Bob", 200)`: Uses the short variable declaration operator (`:=`) to infer type and bind the `*BankAccount` instance.
+          * `account.Deposit(100)`: Invokes the pointer receiver method, increasing balance to 300 and printing `"Deposited 100"`.
+          * `account.Withdraw(50)`: Debits 50 (balance becomes 250) and prints `"Withdrew 50"`.
+          * `fmt.Printf("Balance: %d\n", account.balance)`: Reads `account.balance` and outputs `"Balance: 250"`.

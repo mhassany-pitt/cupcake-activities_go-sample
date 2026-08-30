@@ -3,8 +3,8 @@ source: main.go
 license: MIT
 locale: en-US
 id: cc_bank_account
-title: Complete the BankAccount Logic
-description: Fill in the critical logic for account balance updates and validation in Go.
+title: Complete the BankAccount Go Implementation
+description: Fill in essential Go keywords, operators, and method identifiers to declare structs, update pointer receiver state, and validate transactions.
 authors:
   - first: Jone
     last: Doe
@@ -13,16 +13,24 @@ authors:
 pedagogy:
   activity: code-completion
   difficulty: novice
-  prereq_topics: []
+  prereq_topics:
+    - basic-syntax
+    - variables
   topics:
     - structs
+    - pointers
     - arithmetic
+    - relational-operators
+    - methods
 runtime:
   language: go
 statement: |
-  Complete the `BankAccount` struct implementation by adding the missing updates and validation checks. Focus on:
-  - Updating `a.balance` during a deposit transaction
-  - Ensuring withdrawal amounts do not exceed the current balance
+  Complete the `BankAccount` struct and method implementations in Go by selecting the correct keywords, operators, and method identifiers.
+  Make sure to:
+  1. Declare the composite type using the Go `struct` keyword.
+  2. Correctly increment `a.balance` during a deposit.
+  3. Ensure that withdrawal requests do not exceed the available balance.
+  4. Invoke the proper transaction method in the `main` driver function.
 executions:
   - title: Bob's Account
     stdin: []
@@ -39,6 +47,32 @@ executions:
 elements:
   - type: blank
     location:
+      context: "type BankAccount struct {"
+      snippet: "struct"
+      nth: 1
+    choices:
+      - snippet: "struct"
+        role: solution
+        explanations:
+          - body: |
+              Correct! In Go, the `struct` keyword is used to declare a user-defined record type containing named fields.
+      - snippet: "interface"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. In Go, an `interface` declares a set of method signatures rather than concrete struct fields.
+      - snippet: "class"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Go does not have a `class` keyword; object models are constructed using `struct` and receiver methods.
+      - snippet: "type"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. `type` begins the type declaration (`type BankAccount ...`), but `struct` defines the underlying composite structure.
+  - type: blank
+    location:
       context: "a.balance += amount"
       snippet: "+="
       nth: 1
@@ -47,12 +81,22 @@ elements:
         role: solution
         explanations:
           - body: |
-              Use the `+=` operator to **increase** the current balance by the deposit amount.
+              Correct! The compound addition operator (`+=`) increases `a.balance` by `amount`.
       - snippet: "-="
         role: distractor
         explanations:
           - body: |
-              This would use the `-=` operator, which **decreases** the balance instead of adding to it.
+              Incorrect. The compound subtraction operator (`-=`) would deduct money from the account during a deposit instead of crediting it.
+      - snippet: "*="
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. The compound multiplication operator (`*=`) would multiply the existing balance by the deposit amount, yielding an incorrect total.
+      - snippet: "="
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Using `=` overwrites the balance with `amount` rather than accumulating funds.
   - type: blank
     location:
       context: "if 0 < amount && amount <= a.balance {"
@@ -63,9 +107,40 @@ elements:
         role: solution
         explanations:
           - body: |
-              You must check if the withdrawal amount is less than or equal (`<=`) to the current balance, ensuring the user has **sufficient funds**.
+              Correct! The less-than-or-equal operator (`<=`) ensures the user has sufficient funds, allowing withdrawals up to and including the exact total balance without overdrafting.
+      - snippet: "<"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. The strictly-less-than operator (`<`) would prevent account holders from withdrawing their exact entire balance (withdrawing down to zero).
+      - snippet: ">="
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Using `>=` would invert the business logic, permitting withdrawals only when the amount is greater than or equal to the balance, guaranteeing an overdraft.
       - snippet: ">"
         role: distractor
         explanations:
           - body: |
-              Using `>` would allow withdrawals only when the account does NOT have enough funds, causing overdrafts.
+              Incorrect. Using `>` would only permit transactions that exceed the current balance, causing an immediate overdraft into negative funds.
+  - type: blank
+    location:
+      context: "account.Deposit(100)"
+      snippet: "Deposit"
+      nth: 1
+    choices:
+      - snippet: "Deposit"
+        role: solution
+        explanations:
+          - body: |
+              Correct! Invokes the `Deposit` method on `account` with an argument of `100` to credit the account.
+      - snippet: "Withdraw"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. Invoking `Withdraw(100)` would debit the account instead of performing the required deposit transaction.
+      - snippet: "balance"
+        role: distractor
+        explanations:
+          - body: |
+              Incorrect. `balance` is an `int` field, not a callable method; calling `account.balance(100)` causes a Go compilation error: `cannot call non-function account.balance`.

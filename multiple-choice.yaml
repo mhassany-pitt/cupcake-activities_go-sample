@@ -2,8 +2,8 @@ $schema: https://learning-contents.org/schemas/multiple-choice-question/0.1.0
 license: MIT
 locale: en-US
 id: mcq_bank_account_deposit
-title: Go Struct Deposit Method
-description: Choose the correct implementation of the deposit method in Go.
+title: Go Struct Deposit Method Implementation
+description: Choose the correct implementation of the Deposit method on a Go BankAccount pointer receiver.
 authors:
   - first: Jone
     last: Doe
@@ -13,13 +13,18 @@ pedagogy:
   activity: multiple-choice-question
   difficulty: intermediate
   prereq_topics:
+    - basic-syntax
     - structs
+    - pointers
   topics:
     - structs
+    - pointers
     - methods
-include_choices: 3
+    - variable-scope
+    - state
+include_choices: 4
 question: |
-  Given the following Go struct definition for `BankAccount`:
+  Given the following Go struct definition:
   
   ```go
   type BankAccount struct {
@@ -28,7 +33,7 @@ question: |
   }
   ```
   
-  Which of the following represents the correct implementation for a `Deposit` method in Go that mutates the account balance and returns the new balance?
+  Which of the following represents the correct implementation for a `Deposit` method in Go that validates positive deposit amounts, modifies the original `BankAccount` instance, and returns the new balance?
 choices:
   - body: |
       ```go
@@ -44,7 +49,7 @@ choices:
     order: 1
     explanations:
       - body: |
-          This is the correct implementation. In Go, modifying fields of an instance requires a pointer receiver (`(a *BankAccount)`). It updates `a.balance` using `+=` and returns the final balance.
+          Correct! In Go, mutating struct fields requires a **pointer receiver** `(a *BankAccount)`. This method validates that `amount > 0`, updates `a.balance` in place, and returns the updated balance.
   - body: |
       ```go
       func (a BankAccount) Deposit(amount int) int {
@@ -57,19 +62,30 @@ choices:
     role: distractor
     explanations:
       - body: |
-          Incorrect. In Go, using a value receiver (`(a BankAccount)`) receives a copy of the struct, so changes to `a.balance` are discarded when the method returns.
+          Incorrect. In Go, a **value receiver** `(a BankAccount)` operates on a shallow copy of the struct. Modifications to `a.balance` are discarded as soon as the method returns.
   - body: |
       ```go
-      func Deposit(a BankAccount, amount int) int {
-          var balance = a.balance + amount
-          return balance
+      func (a *BankAccount) Deposit(amount int) int {
+          if amount > 0 {
+              a.balance =+ amount
+          }
+          return a.balance
       }
       ```
     role: distractor
     explanations:
       - body: |
-          Incorrect. This is a standalone function with a value parameter rather than a method with a pointer receiver.
-  - body: None
+          Incorrect. In Go, `=+` is parsed as an assignment of positive `amount` (`a.balance = +amount`), which overwrites the existing balance rather than accumulating funds with `+=`.
+  - body: |
+      ```go
+      func Deposit(a *BankAccount, amount int) int {
+          if amount > 0 {
+              a.balance += amount
+          }
+          return a.balance
+      }
+      ```
     role: distractor
-    include: always
-    order: 2
+    explanations:
+      - body: |
+          Incorrect. This defines a standalone package function `Deposit(a, amount)` rather than a method bound to the `*BankAccount` type. It cannot be invoked using method syntax `account.Deposit(100)`.
