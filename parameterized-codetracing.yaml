@@ -1,4 +1,4 @@
-$schema: https://learning-contents.org/schemas/parameterized-code-tracing/0.1.0
+$schema: https://adapt2.sis.pitt.edu/cupcake/schemas/parameterized-code-tracing/0.1.0
 license: MIT
 locale: en-US
 id: parameterized_code_tracing_bank_account

@@ -1,4 +1,4 @@
-$schema: https://learning-contents.org/schemas/free-coding/0.1.0
+$schema: https://adapt2.sis.pitt.edu/cupcake/schemas/free-coding/0.1.0
 source: main.go
 license: MIT
 locale: en-US

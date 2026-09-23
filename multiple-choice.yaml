@@ -1,4 +1,4 @@
-$schema: https://learning-contents.org/schemas/multiple-choice-question/0.1.0
+$schema: https://adapt2.sis.pitt.edu/cupcake/schemas/multiple-choice-question/0.1.0
 license: MIT
 locale: en-US
 id: mcq_bank_account_deposit
