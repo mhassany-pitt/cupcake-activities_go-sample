@@ -24,14 +24,17 @@ pedagogy:
     - conditional-logic
 runtime:
   language: go
+  version: 1.20
 statement: |
   Rearrange the blocks to correctly implement the factory constructor and methods for the `BankAccount` struct in Go.
   Make sure to:
   1. Initialize and return a pointer to a `BankAccount` struct (`*BankAccount`).
   2. Implement the `Deposit` method with a pointer receiver and positive input validation.
   3. Implement the `Withdraw` method with strict overdraft protection and insufficient funds notification.
-executions:
+testcases:
   - title: Standard Transaction
+    visible: true
+    stdin: []
     stdout: |-
       Deposited 100
       Withdrew 50
@@ -41,6 +44,16 @@ executions:
       Withdrew 50
       Balance: 250
     status: pass
+    hints:
+      - "Arrange the code blocks in logical sequential order from initialization to final output."
+      - "Ensure correct block indentation where applicable."
+    feedback:
+      - on_pass:
+          - explanations:
+              - "Correct! All blocks are sequenced properly to produce the expected output."
+        on_fail:
+          - explanations:
+              - "The block ordering or indentation is incorrect. Re-examine the flow of execution."
 elements:
   - type: block
     group: bank-functions
@@ -61,6 +74,7 @@ elements:
               }
           }
         role: solution
+        indent: 0
         explanations:
           - body: |
               Correct! Returns a pointer to a composite literal `&BankAccount{...}` with initialized `owner` and `balance`.
@@ -96,6 +110,7 @@ elements:
               return a.balance
           }
         role: solution
+        indent: 0
         explanations:
           - body: |
               Correct! Uses a pointer receiver `(a *BankAccount)` to mutate `a.balance` when `amount > 0` and returns the updated balance.
@@ -124,6 +139,7 @@ elements:
               return a.balance
           }
         role: solution
+        indent: 0
         explanations:
           - body: |
               Correct! Validates `0 < amount && amount <= a.balance`, debits the balance on success, and outputs an error message on insufficient funds.

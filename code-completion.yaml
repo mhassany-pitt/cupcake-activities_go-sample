@@ -24,6 +24,7 @@ pedagogy:
     - methods
 runtime:
   language: go
+  version: 1.20
 statement: |
   Complete the `BankAccount` struct and method implementations in Go by selecting the correct keywords, operators, and method identifiers.
   Make sure to:
@@ -31,8 +32,9 @@ statement: |
   2. Correctly increment `a.balance` during a deposit.
   3. Ensure that withdrawal requests do not exceed the available balance.
   4. Invoke the proper transaction method in the `main` driver function.
-executions:
+testcases:
   - title: Bob's Account
+    visible: true
     stdin: []
     stdout: |-
       Deposited 100
@@ -42,8 +44,17 @@ executions:
       Deposited 100
       Withdrew 50
       Balance: 250
-    stderr: ''
     status: pass
+    hints:
+      - "Review the blanks and ensure the operations match the expected transaction flow."
+      - "Pay attention to conditional checks and return or print statements."
+    feedback:
+      - on_pass:
+          - explanations:
+              - "Great job! All blanks were completed correctly and produced the expected output."
+        on_fail:
+          - explanations:
+              - "One or more blanks are incorrect. Check the expected output and verify your selections."
 elements:
   - type: blank
     location:
