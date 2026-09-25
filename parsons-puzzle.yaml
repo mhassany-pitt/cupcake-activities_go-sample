@@ -31,6 +31,9 @@ statement: |
   1. Initialize and return a pointer to a `BankAccount` struct (`*BankAccount`).
   2. Implement the `Deposit` method with a pointer receiver and positive input validation.
   3. Implement the `Withdraw` method with strict overdraft protection and insufficient funds notification.
+hints:
+  - "Arrange the code blocks in logical sequential order from initialization to final output."
+  - "Ensure correct block indentation where applicable."
 testcases:
   - title: Standard Transaction
     visible: true
@@ -44,16 +47,11 @@ testcases:
       Withdrew 50
       Balance: 250
     status: pass
-    hints:
-      - "Arrange the code blocks in logical sequential order from initialization to final output."
-      - "Ensure correct block indentation where applicable."
     feedback:
-      - on_pass:
-          - explanations:
-              - "Correct! All blocks are sequenced properly to produce the expected output."
-        on_fail:
-          - explanations:
-              - "The block ordering or indentation is incorrect. Re-examine the flow of execution."
+      on_pass:
+        - "Correct! All blocks are sequenced properly to produce the expected output."
+      on_fail:
+        - "The block ordering or indentation is incorrect. Re-examine the flow of execution."
 elements:
   - type: block
     group: bank-functions

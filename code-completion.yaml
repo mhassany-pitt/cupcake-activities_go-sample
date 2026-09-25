@@ -32,6 +32,9 @@ statement: |
   2. Correctly increment `a.balance` during a deposit.
   3. Ensure that withdrawal requests do not exceed the available balance.
   4. Invoke the proper transaction method in the `main` driver function.
+hints:
+  - "Review the blanks and ensure the operations match the expected transaction flow."
+  - "Pay attention to conditional checks and return or print statements."
 testcases:
   - title: Bob's Account
     visible: true
@@ -45,16 +48,11 @@ testcases:
       Withdrew 50
       Balance: 250
     status: pass
-    hints:
-      - "Review the blanks and ensure the operations match the expected transaction flow."
-      - "Pay attention to conditional checks and return or print statements."
     feedback:
-      - on_pass:
-          - explanations:
-              - "Great job! All blanks were completed correctly and produced the expected output."
-        on_fail:
-          - explanations:
-              - "One or more blanks are incorrect. Check the expected output and verify your selections."
+      on_pass:
+        - "Great job! All blanks were completed correctly and produced the expected output."
+      on_fail:
+        - "One or more blanks are incorrect. Check the expected output and verify your selections."
 elements:
   - type: blank
     location:
