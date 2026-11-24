@@ -48,7 +48,6 @@ testcases:
       Deposited 100
       Withdrew 50
       Balance: 250
-    status: pass
     feedback:
       on_pass:
         - "Correct trace! You tracked the state transitions and outputs accurately."

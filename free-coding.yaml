@@ -95,7 +95,6 @@ testcases:
       Deposited 100
       Withdrew 50
       Balance: 250
-    status: pass
     feedback:
       on_pass:
         - "Great job! Your solution executed properly and matched all expected outputs."
